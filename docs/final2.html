@@ -48,10 +48,28 @@ var svg = d3.select("div#gwh_all").append("svg")
 var dataset = d3.csv('https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/gwh_all.json');
 dataset.then(function(data) {
     data.map(function(d) {
-            d.gwh = +d.gwh;
+            d.val = +d.gwh;
             return d;});
 });
-console.log(dataset);
+dataset.then(function(data) {  
+    svg.selectAll("div")
+    .data(data)
+    .enter()
+    .append("rect")
+    .attr("class", "bar")
+    .attr("x", function (d, i) {
+        for (i>0; i < data.length; i++) {
+            return i;
+        }
+    })
+    .attr("y", function (d) {
+        return height - d.val;
+    })
+    .attr("width", 20)
+    .attr("height", function (d) {
+        return d.val;
+    });
+});
 
 
 </script>
