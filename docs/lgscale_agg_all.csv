@@ -1,63 +1,63 @@
 year,program,gwh
-2006,Biomass,25
-2006,Hydroelectric,1300
-2006,Land Based Wind,526
-2007,Biomass,25
-2007,Hydroelectric,1300
-2007,Land Based Wind,526
-2008,Biomass,97
-2008,Hydroelectric,9942
-2008,Land Based Wind,1552
-2009,Biomass,71
-2009,Hydroelectric,9833
-2009,Land Based Wind,2679
-2010,Biomass,66
-2010,Hydroelectric,7727
-2010,Land Based Wind,1859
-2011,Biogas,2706
-2011,Biomass,66
-2011,Hydroelectric,19013
-2011,Land Based Wind,2249
-2012,Biogas,1923
-2012,Biomass,66
-2012,Hydroelectric,13370
-2012,Land Based Wind,3976
-2013,Biogas,1638
-2013,Biomass,194
-2013,Hydroelectric,18302
-2013,Land Based Wind,3053
-2014,Biogas,1638
-2014,Biomass,130
-2014,Hydroelectric,16870
-2014,Land Based Wind,3696
-2015,Biogas,1638
-2015,Biomass,182
-2015,Fuel Cell,200
-2015,Hydroelectric,16353
-2015,Land Based Wind,3365
-2016,Biogas,1638
-2016,Biomass,156
-2016,Fuel Cell,226
-2016,Hydroelectric,23409
-2016,Land Based Wind,3365
-2017,Biogas,1732
-2017,Biomass,156
-2017,Fuel Cell,163
-2017,Hydroelectric,19881
-2017,Land Based Wind,3365
-2018,Biogas,1779
-2018,Biomass,156
-2018,Fuel Cell,331
-2018,Hydroelectric,22805
-2018,Land Based Wind,3365
-2019,Biogas,1732
-2019,Biomass,156
-2019,Fuel Cell,247
-2019,Hydroelectric,30943
-2019,Land Based Wind,3777
-2020,Biogas,1732
-2020,Biomass,156
-2020,Fuel Cell,247
-2020,Hydroelectric,26143
-2020,Land Based Wind,4527
-2020,Solar,1662
+2006-01-01,Biomass,25
+2006-01-01,Hydroelectric,1300
+2006-01-01,Land Based Wind,526
+2007-01-01,Biomass,25
+2007-01-01,Hydroelectric,1300
+2007-01-01,Land Based Wind,526
+2008-01-01,Biomass,97
+2008-01-01,Hydroelectric,9942
+2008-01-01,Land Based Wind,1552
+2009-01-01,Biomass,71
+2009-01-01,Hydroelectric,9833
+2009-01-01,Land Based Wind,2679
+2010-01-01,Biomass,66
+2010-01-01,Hydroelectric,7727
+2010-01-01,Land Based Wind,1859
+2011-01-01,Biogas,2706
+2011-01-01,Biomass,66
+2011-01-01,Hydroelectric,19013
+2011-01-01,Land Based Wind,2249
+2012-01-01,Biogas,1923
+2012-01-01,Biomass,66
+2012-01-01,Hydroelectric,13370
+2012-01-01,Land Based Wind,3976
+2013-01-01,Biogas,1638
+2013-01-01,Biomass,194
+2013-01-01,Hydroelectric,18302
+2013-01-01,Land Based Wind,3053
+2014-01-01,Biogas,1638
+2014-01-01,Biomass,130
+2014-01-01,Hydroelectric,16870
+2014-01-01,Land Based Wind,3696
+2015-01-01,Biogas,1638
+2015-01-01,Biomass,182
+2015-01-01,Fuel Cell,200
+2015-01-01,Hydroelectric,16353
+2015-01-01,Land Based Wind,3365
+2016-01-01,Biogas,1638
+2016-01-01,Biomass,156
+2016-01-01,Fuel Cell,226
+2016-01-01,Hydroelectric,23409
+2016-01-01,Land Based Wind,3365
+2017-01-01,Biogas,1732
+2017-01-01,Biomass,156
+2017-01-01,Fuel Cell,163
+2017-01-01,Hydroelectric,19881
+2017-01-01,Land Based Wind,3365
+2018-01-01,Biogas,1779
+2018-01-01,Biomass,156
+2018-01-01,Fuel Cell,331
+2018-01-01,Hydroelectric,22805
+2018-01-01,Land Based Wind,3365
+2019-01-01,Biogas,1732
+2019-01-01,Biomass,156
+2019-01-01,Fuel Cell,247
+2019-01-01,Hydroelectric,30943
+2019-01-01,Land Based Wind,3777
+2020-01-01,Biogas,1732
+2020-01-01,Biomass,156
+2020-01-01,Fuel Cell,247
+2020-01-01,Hydroelectric,26143
+2020-01-01,Land Based Wind,4527
+2020-01-01,Solar,1662
