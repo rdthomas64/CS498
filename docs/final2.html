@@ -1,0 +1,87 @@
+<html>
+<head>
+<script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<style>
+    .page{font-family:Arial, Helvetica, sans-serif;}
+    .title{font-family:Arial, Helvetica, sans-serif; font-size: 30px; font-weight: bold; color: blue; margin-bottom: 20px;}
+    .section, .gwh{font-family:Arial, Helvetica, sans-serif; font-size: 26px; margin-top: 26px; margin-bottom: 10px;}
+    .gwh{font-size: 18px;}
+    .content{font-family:Arial, Helvetica, sans-serif; font-size: 16px; margin-bottom: 12px; line-height: 1.5;}
+    label{font-family:Arial, Helvetica, sans-serif; font-size: 16px; }
+    body{margin-left: 20%; margin-right: 20%;}
+</style>    
+
+</head>
+<body>
+<div class='title'>New York State: Effects on Electric Production Due to Renewable Sources</div>
+
+<div class="content">For more than 20 years, New York State has had continuous plans to lessen its dependence on non-renewable energy sources. 
+    Starting in 2000 with the introduction of rebates for solar renewable installations, NYSERDA began tracking the impact of renewable
+    energy production (gigawatt hours, "GWH") against overall energy consumption.<p>
+    Its directive changed in 2015 with an updated goal:  
+    
+    "On July 6, 2015, the New York State Energy Planning Board issued the 2015 State Energy Plan ...
+    which stated the goal achieve 50% of the State’s electricity be generated from renewable resources by
+    2030 (50x30 goal)."<sup>1</sup></div>
+<div id="gwh_all" class='section'>Electric Consumption:  2000 - 2020 (Current year estimated)</div>
+
+<script>
+
+var gwh_all_data = [{year:'2000', gwh:'155500'}, {year:'2001', gwh:'156500'}, 
+{year:'2002', gwh:'158750'}, {year:'2003', gwh:'158000'}, {year:'2004', gwh:'160500'}, {year:'2005', gwh:'167000'}, {year:'2006', gwh:'162000'}, {year:'2007', gwh:'167500'}, {year:'2008', gwh:'165750'}, {year:'2009', gwh:'159000'}, 
+{year:'2010', gwh:'163875'}, {year:'2011', gwh:'163750'}, {year:'2012', gwh:'163000'}, {year:'2013', gwh:'163750'}, {year:'2014', gwh:'160000'}, 
+{year:'2015', gwh:'161875'}, {year:'2016', gwh:'161000'}, {year:'2017', gwh:'156000'}, {year:'2018', gwh:'158500'}, {year:'2019', gwh:'162000'}, {year:'2020', gwh:'163500'}];
+
+var width = 960;
+var height = 500;
+var adj = 20;
+// we are appending SVG first
+var svg = d3.select("div#gwh_all").append("svg")
+.attr("preserveAspectRatio", "xMinYMin meet")
+.attr("viewBox", "-" + adj + " -"+ adj + " " + (width + adj) + " " + (height + adj))
+.style("padding", 5)
+.style("margin", 5)
+.classed("svg-content", true);
+
+
+var dataset = d3.csv('file://Users/rt/documents/uofi/cs498-visualization/gwh_all.csv');
+console.log(dataset);
+
+
+</script>
+<div class="content">GWG all</div>
+<script>
+$(document).ready(function(){
+    $('input[type="radio"]').click(function(){
+        var inputValue = $(this).attr("value");
+        var targetBox = $("." + inputValue);
+        $(".gwh").not(targetBox).hide();
+        $(targetBox).show();
+    });
+});
+</script>
+
+<div class='section'>Electric Produciton from Renewables</div>
+<div class='content'>Large scale renewables are defined as </div>
+<div>
+    <label><input type="radio" name="lgRadio" class='lgRadio' value="all"> All</label>
+    <label><input type="radio" name="lgRadio" class='lgRadio' value="biogas"> Biogas</label>
+    <label><input type="radio" name="lgRadio" class='lgRadio' value="biomass"> Biomass</label>
+    <label><input type="radio" name="lgRadio" class='lgRadio' value="fuelcell"> Fuel Cell</label>
+    <label><input type="radio" name="lgRadio" class='lgRadio' value="hydro"> Hydroelectric</label>
+    <label><input type="radio" name="lgRadio" class='lgRadio' value="wind"> Wind</label>
+    <label><input type="radio" name="lgRadio" class='lgRadio' value="solar"> Solar</label>
+</div>
+<div class="all gwh">All</div>
+<div class="biogas gwh">Biogas</div>
+<div class="biomass gwh">Biomass</div>
+<div class="fuelcell gwh">Fuel Cell</div>
+<div class="hydro gwh">Hydroelectric</div>
+<div class="wind gwh">Wind</div>
+<div class="solar gwh">Solar</div>
+
+
+
+</body>
+</html>
