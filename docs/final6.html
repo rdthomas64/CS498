@@ -44,8 +44,6 @@
         <div class="notation">Mouseover enabled on datapoints</div>
         <div id="gwh_all"></div>
     </div>
-    
-
 <script>
 // format numbers
 function numberWithCommas(x) {
@@ -129,8 +127,9 @@ d3.json("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/gwh_all.
             g.selectAll("#tooltip_path").remove();
     });
 });
-
 </script>
+<div class="content">More</div>
+
 <div class='section'>Electric Production from Renewables</div>
 <div class='content'>Large scale renewables are defined as </div>
 <div>
@@ -207,7 +206,7 @@ function showbg(){
   document.getElementById('hydro').style.display ='none';
   document.getElementById('wind').style.display ='none';
   document.getElementById('solar').style.display ='block';}
-  
+
 </script>
 <div id="all" class="all gwh">All</div>
 <div id="biogas" class="biogas gwh">Biogas</div>
