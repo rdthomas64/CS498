@@ -1,3 +1,5 @@
+<script type="text/javascript">
+
 // format numbers
 function numberWithCommas(x) {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -125,3 +127,5 @@ d3.json("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/gwh_all.
         .text('EISA enacted');
        
 });
+
+</script>
