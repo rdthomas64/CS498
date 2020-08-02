@@ -7,17 +7,19 @@
 <style>
     .page{font-family:Arial, Helvetica, sans-serif;}
     .title{font-family:Arial, Helvetica, sans-serif; font-size: 30px; font-weight: bold; color: steelblue; margin-bottom: 20px;}
-    .section, .gwh{font-family:Arial, Helvetica, sans-serif; font-size: 24px; margin-top: 26px; margin-bottom: 12px;}
+    .section, .gwh{font-family:Arial, Helvetica, sans-serif; font-size: 24px; margin-top: 26px; color: forestgreen; margin-bottom: 12px;}
     .gwh{font-size: 18px;}
     .content{font-family:Arial, Helvetica, sans-serif; font-size: 16px; margin-bottom: 12px; line-height: 1.7;}
-    .notation{font-family:Arial, Helvetica, sans-serif; font-size: 14px; margin-bottom: 10px;}
+    .notation{font-family:Arial, Helvetica, sans-serif; font-size: 14px; margin-bottom: 20px; font-style: italic;}
+    .source{font-family:Arial, Helvetica, sans-serif; font-size: 14px; font-style: italic; margin-bottom: 10px;}
     label{font-family:Arial, Helvetica, sans-serif; font-size: 16px; }
     body{margin-left: 20%; margin-right: 20%;}
-    .line {fill: none; stroke: steelblue; stroke-width: 2px;}
+    .line {fill: none; stroke-width: 2px;}
     svg{font-family:Arial, Helvetica, sans-serif; font-size: 14px; display: block;
     margin: auto;}
     g{font-size:12px;}
-    #tooltip {font-family: Arial, Helvetica, sans-serif; font-size: 15px; font-weight: bold;}
+    #tooltip, #tooltip_renew, #tooltip_wind, #tooltip_hydro, #tooltip_others {font-family: Arial, Helvetica, sans-serif; font-size: 15px; font-weight: bold;}
+    #gwh{color: black;}
     #gwh_all{text-align:center;}
     #others{display: none;}
     #wind{display: none;}
@@ -30,17 +32,19 @@
     <div class='title'>New York State: Renewable Energy as a Percentage of Energy Usage (2000 - 2020)</div>
 
     <div class="content">For more than 20 years, New York State has had continuous plans to lessen its dependence on non-renewable energy sources. 
-        Starting in 2000 with the introduction of rebates for solar renewable installations, the New York Independent System Operator 
+        Starting in 2006 with the introduction of large scale renewable installations, the New York Independent System Operator 
         ("NYISO") began tracking the impact of renewable energy production (gigawatt hours, "GWH") against overall energy consumption.<p>
-        The directive changed in 2015 with an updated goal:  
         
-        "On July 6, 2015, the New York State Energy Planning Board issued the 2015 State Energy Plan ...
-        which stated the goal achieve 50% of the State’s electricity be generated from renewable resources by
-        2030 (50x30 goal)."<sup>1</sup></div>
-    <div class='section'>Electricity Consumption (Gigawatt Hours) vs. Population:  2000 - 2020<br>
-        <div class="notation">Mouseover enabled on datapoints; 2020 GWH projected; population data 2000 - 2019.</div>
+        Reviewing the reportable electricity consumption data over the last 20 years as a baseline, there are peaks for 2005 and 2007.
+        After that timeframe, electricity consumption has a slight downwards trend.  Population changes in New York State 
+        do not support the decreasing electricity consumption, since the population between 2000 and 2019 
+        increased 2.5% (19,001,780 vs. 19,453,561)<sup>1</sup>.  However, in the beginning of 2008 the United States
+        enacted the "Energy Independence and Security Act of 2007 (EISA)"<sup>2</sup> which included regulation of light bulb power consumption (i.e. changing from 
+        incandesent to halogen or LED) that possibly impacted electricity consumption.</div>
+    <div class='section'>Electricity Consumption (Gigawatt Hours) vs. Population:  2000 - 2020</div>
+        <div class="notation">Mouseover enabled on datapoints; 2020 GWH projected; population data 2000 - 2019.<br>
+        Data source:  NYISO<sup>1</sup>, New York Open Data <sup>2</sup></div>
         <div id="gwh_all"></div>
-    </div>
 <script>
 // format numbers
 function numberWithCommas(x) {
@@ -94,7 +98,7 @@ d3.json("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/gwh_all.
     yr.domain([19000000, 20000000]);
 
     // append attrs to svg
-    svg.append("path").data([data]).attr("class", "line").attr("d", valueline);
+    svg.append("path").data([data]).attr("class", "line").attr("d", valueline).attr("stroke", "steelblue");
     svg.append("path").data([data]).attr("class", "line").style("stroke", "red").attr("d", popline);
     svg.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x));
 
@@ -167,21 +171,37 @@ d3.json("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/gwh_all.
        
 });
 </script>
-<div class="content">Reviewing the reportable electricity consumption data over the last 20 years, there are peaks for 2005 and 2007.
-    After that timeframe, electricity consumption has a slight downwards trend.  Population changes in New York State 
-    do not support the decreasing electricity consumption, since the population between 2000 and 2019 
-    increased 2.5% (19,001,780 vs. 19,453,561)<sup>2</sup>.  However, in the beginning of 2008 the United States
-    enacted the "Energy Independence and Security Act of 2007 (EISA)"<sup>3</sup> which included regulation of light bulb power consumption (i.e. changing from 
-    incandesent to halogen or LED) that possibly impacted electricity consumption.
+<div class="content">
+    Tracking of renewable energy began in 2006, focusing on three types of renewables:
+    <ul>
+        <li>Hydroelectric - energy produced from dams and other water-based systems</li>
+        <li>Wind - energy produced from turbines when turned by wind</li>
+        <li>Other - energy produced by: 
+            <ul>
+            <li>Biogas - anaerobic digestion of organic matter</li>
+            <li>Biomass - chemical energy released from organic matter due to solar energy</li>
+            <li>Fuel cells - retain energy produced during excess periods, stored like batteries</li>
+            </ul>
+        </li>
+    </ul>
+    There have been many renewable energy directives over the years, each increasing the expected percentage
+    of renewable resources used in electricity production -- the most latest change occurred in 2015:  
+    
+    "On July 6, 2015, the New York State Energy Planning Board issued the 2015 State Energy Plan ...
+    which stated the goal achieve 50% of the State’s electricity be generated from renewable resources by
+    2030 (50x30 goal)."<sup>3</sup></div>
+  
+   
 </div>
 
-<div class='section'>Electric Production from Renewables</div>
-<div class='content'>Large scale renewables are defined as </div>
+<div class='section'>Electric Production (Gigawatt Hours) from Renewables:  2006 - 2020</div>
+<div class="notation">Mouseover enabled on datapoints; toggle provides data specific to reach renewable type; 2020 GWH projected.<br>
+Data source:  New York Open Data <sup>4</sup></div>
+
 <div>
     <label><input type="radio" name="lgRadio" class='lgRadio' value="all" onclick="showall();" checked > All</label>
     <label><input type="radio" name="lgRadio" class='lgRadio' value="hydro" onclick="showh();"> Hydroelectric</label>
     <label><input type="radio" name="lgRadio" class='lgRadio' value="wind" onclick="showw();"> Wind</label>
-    <label><input type="radio" name="lgRadio" class='lgRadio' value="solar" onclick="shows();"> Solar</label>
     <label><input type="radio" name="lgRadio" class='lgRadio' value="others" onclick="showbg();"> Other</label>
 </div>
 <script>
@@ -191,56 +211,49 @@ function showall(){
   document.getElementById('others').style.display ='none';
   document.getElementById('hydro').style.display ='none';
   document.getElementById('wind').style.display ='none';
-  document.getElementById('solar').style.display ='none';
-
 }
 function showbg(){
   document.getElementById('allrenew').style.display ='none';
   document.getElementById('others').style.display ='block';
   document.getElementById('hydro').style.display ='none';
   document.getElementById('wind').style.display ='none';
-  document.getElementById('solar').style.display ='none';}
-
-  function showbm(){
+}
+function showbm(){
   document.getElementById('allrenew').style.display ='none';
   document.getElementById('others').style.display ='none';
   document.getElementById('hydro').style.display ='none';
   document.getElementById('wind').style.display ='none';
-  document.getElementById('solar').style.display ='none';}
-
+}
   function showfc(){
   document.getElementById('allrenew').style.display ='none';
   document.getElementById('others').style.display ='none';
   document.getElementById('hydro').style.display ='none';
   document.getElementById('wind').style.display ='none';
-  document.getElementById('solar').style.display ='none';}
-
+  }
   function showh(){
   document.getElementById('allrenew').style.display ='none';
   document.getElementById('others').style.display ='none';
   document.getElementById('hydro').style.display ='block';
   document.getElementById('wind').style.display ='none';
-  document.getElementById('solar').style.display ='none';}
-
+}
   function showw(){
   document.getElementById('allrenew').style.display ='none';
   document.getElementById('others').style.display ='none';
   document.getElementById('hydro').style.display ='none';
   document.getElementById('wind').style.display ='block';
-  document.getElementById('solar').style.display ='none';}
-
-  function shows(){
-  document.getElementById('allrenew').style.display ='none';
-  document.getElementById('others').style.display ='none';
-  document.getElementById('hydro').style.display ='none';
-  document.getElementById('wind').style.display ='none';
-  document.getElementById('solar').style.display ='block';}
+}
 
 </script>
-<div id="allrenew" class="all gwh">All</div>
+
+<div id="allrenew" class="all gwh" style="color: black;">All Renewable Projects<br><br></div>
+<div id="hydro" class="hydro gwh" style="color: black;">Hydroelectric Renewable Projects<br><br></div>
+<div id="wind" class="wind gwh" style="color: black;">Wind Renewable Projects<br><br></div>
+<div id="others" class="others gwh"  style="color: black;">Other (Biogas, Biomass, Fuel Cell) Renewable Projects<br><br></div>
+
 <script>
+// -----allrevew
 // add line
-var valueline_reneww = d3.line()
+var valueline_wind = d3.line()
     .x(function(d) { return x(parseTime(d.year)); })
     .y(function(d) { return y(d.gwh_all); });
 
@@ -254,12 +267,12 @@ var svg_gwhall = d3.select("#allrenew").append("svg")
 var g_gwhall = svg_gwhall.append("g").attr("transform", "translate(10, 0)");
         
 // get data
-d3.csv("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/lgscale_agg_all.csv").then(function(data) {
+d3.csv("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/lgscale_agg_mn.csv").then(function(data) {
 
     // format data
     data.forEach(function(d) {
         d.year_renew = d.year;
-        d.gwh_all = +d.gwh_all;
+        d.gwh_all = +d.all_gwh;
     });
 
     // Scale the range of the data
@@ -267,7 +280,7 @@ d3.csv("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/lgscale_a
     y.domain([0, 40000]);
 
     // append attrs to svg
-    svg_gwhall.append("path").data([data]).attr("class", "line").attr("d", valueline_reneww);
+    svg_gwhall.append("path").data([data]).attr("class", "line").attr("d", valueline_wind).attr("stroke", "purple");
     svg_gwhall.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x));
 
     // add y axis
@@ -298,7 +311,7 @@ d3.csv("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/lgscale_a
         g_gwhall.selectAll("#tooltip_path_renew").data([d]).enter().append("line")
         .attr("id", "tooltip_path_renew")
         .attr("class", "line")
-        .attr("d", valueline_reneww)
+        .attr("d", valueline_wind)
         .attr("x1", function(d) {return x(parseTime(d.year_renew)) })
         .attr("x2", function(d) {return x(parseTime(d.year_renew)) })
         .attr("y1", height)
@@ -315,23 +328,247 @@ d3.csv("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/lgscale_a
 
 </script>
 
+<script>
+    // -----wind
+    // add line
+    var valueline_wind = d3.line()
+        .x(function(d) { return x(parseTime(d.year)); })
+        .y(function(d) { return y(d.gwh_all); });
+    
+    // create graph
+    var svg_gwhwind = d3.select("#wind").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    
+    var g_gwhwind = svg_gwhwind.append("g").attr("transform", "translate(10, 0)");
+            
+    // get data
+    d3.csv("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/lgscale_agg_mn.csv").then(function(data) {
+    
+        // format data
+        data.forEach(function(d) {
+            d.year_wind = d.year;
+            d.gwh_all = +d.wind_gwh;
+        });
+    
+        // Scale the range of the data
+        x.domain(d3.extent(data, function(d) { return parseTime(d.year_wind); }));
+        y.domain([0, 40000]);
+    
+        // append attrs to svg
+        svg_gwhwind.append("path").data([data]).attr("class", "line").attr("d", valueline_wind).attr("stroke", "purple");
+        svg_gwhwind.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x));
+    
+        // add y axis
+        svg_gwhwind.append("g").call(d3.axisLeft(y));
+    
+        // add y axis descriptions
+        svg_gwhwind.append("text")      // text label for the x axis
+            .attr("x", margin.left - 100 )
+            .attr("y", margin.top - 45 )
+            .style("text-anchor", "middle")
+            .text("GWH");
+    
+        // add circles to data points         
+        g_gwhwind.selectAll("circle").data(data).enter().append("circle")
+        .attr("cx", function(d) { return x(parseTime(d.year_wind)) - 10; })
+        .attr("cy", function(d) { return y(d.gwh_all); })
+        .attr("r", function(d, i) { return 7; })
+        .attr("id", function(d) { return d.id; })
+        .style("fill", "#aacc33")
+        .on("mouseover", function(d){
+        // add mouseover data to data points
+            d3.select(this).transition().duration(200).style("fill", "#cc0033");
+    
+            g_gwhwind.selectAll("#tooltip_wind").data([d]).enter().append("text")
+            .attr("id", "tooltip_wind")
+            .text(function(d, i) { return 'Year:' + d.year_wind.substring(0,4) + ', GWH: ' + numberWithCommas(d.gwh_all); })
+    
+            g_gwhwind.selectAll("#tooltip_path_wind").data([d]).enter().append("line")
+            .attr("id", "tooltip_path_wind")
+            .attr("class", "line")
+            .attr("d", valueline_wind)
+            .attr("x1", function(d) {return x(parseTime(d.year_wind)) })
+            .attr("x2", function(d) {return x(parseTime(d.year_wind)) })
+            .attr("y1", height)
+            .attr("y2", function(d) {return y(d.gwh_all)})
+            .attr("stroke", "steelblue")
+            .style("stroke-dasharray", ("3, 3"));})
+            .on("mouseout", function(d) {
+                d3.select(this).transition().duration(500).style("fill", "#aacc33");
+                g_gwhwind.selectAll("#tooltip_wind").remove();
+                g_gwhwind.selectAll("#tooltip_path_wind").remove();
+        });
+           
+    });
+    
+    </script>
 
-<div id="hydro" class="hydro gwh">Hydroelectric</div>
-<div id="wind" class="wind gwh">Wind</div>
-<div id="solar" class="solar gwh">Solar</div>
-<div id="others" class="others gwh">Other</div>
+<script>
+    // -----hydro
+    // add line
+    var valueline_hydro = d3.line()
+        .x(function(d) { return x(parseTime(d.year)); })
+        .y(function(d) { return y(d.gwh_all); });
+    
+    // create graph
+    var svg_gwhhydro = d3.select("#hydro").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    
+    var g_gwhhydro = svg_gwhhydro.append("g").attr("transform", "translate(10, 0)");
+            
+    // get data
+    d3.csv("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/lgscale_agg_mn.csv").then(function(data) {
+    
+        // format data
+        data.forEach(function(d) {
+            d.year_hydro = d.year;
+            d.gwh_all = +d.hydro_gwh;
+        });
+    
+        // Scale the range of the data
+        x.domain(d3.extent(data, function(d) { return parseTime(d.year_hydro); }));
+        y.domain([0, 40000]);
+    
+        // append attrs to svg
+        svg_gwhhydro.append("path").data([data]).attr("class", "line").attr("d", valueline_hydro).attr('stroke', 'purple');
+        svg_gwhhydro.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x));
+    
+        // add y axis
+        svg_gwhhydro.append("g").call(d3.axisLeft(y));
+    
+        // add y axis descriptions
+        svg_gwhhydro.append("text")      // text label for the x axis
+            .attr("x", margin.left - 100 )
+            .attr("y", margin.top - 45 )
+            .style("text-anchor", "middle")
+            .text("GWH");
+    
+        // add circles to data points         
+        g_gwhhydro.selectAll("circle").data(data).enter().append("circle")
+        .attr("cx", function(d) { return x(parseTime(d.year_hydro)) - 10; })
+        .attr("cy", function(d) { return y(d.gwh_all); })
+        .attr("r", function(d, i) { return 7; })
+        .attr("id", function(d) { return d.id; })
+        .style("fill", "#aacc33")
+        .on("mouseover", function(d){
+        // add mouseover data to data points
+            d3.select(this).transition().duration(200).style("fill", "#cc0033");
+    
+            g_gwhhydro.selectAll("#tooltip_hydro").data([d]).enter().append("text")
+            .attr("id", "tooltip_hydro")
+            .text(function(d, i) { return 'Year:' + d.year_hydro.substring(0,4) + ', GWH: ' + numberWithCommas(d.gwh_all); })
+    
+            g_gwhhydro.selectAll("#tooltip_path_hydro").data([d]).enter().append("line")
+            .attr("id", "tooltip_path_hydro")
+            .attr("class", "line")
+            .attr("d", valueline_hydro)
+            .attr("x1", function(d) {return x(parseTime(d.year_hydro)) })
+            .attr("x2", function(d) {return x(parseTime(d.year_hydro)) })
+            .attr("y1", height)
+            .attr("y2", function(d) {return y(d.gwh_all)})
+            .attr("stroke", "steelblue")
+            .style("stroke-dasharray", ("3, 3"));})
+            .on("mouseout", function(d) {
+                d3.select(this).transition().duration(500).style("fill", "#aacc33");
+                g_gwhhydro.selectAll("#tooltip_hydro").remove();
+                g_gwhhydro.selectAll("#tooltip_path_hydro").remove();
+        });
+           
+    });
+    
+    </script>
 
+<script>
+    // -----others
+    // add line
+    var valueline_others = d3.line()
+        .x(function(d) { return x(parseTime(d.year)); })
+        .y(function(d) { return y(d.gwh_all); });
+    
+    // create graph
+    var svg_gwhothers = d3.select("#others").append("svg")
+        .attr("width", width + margin.left + margin.right)
+        .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+    
+    var g_gwhothers = svg_gwhothers.append("g").attr("transform", "translate(10, 0)");
+            
+    // get data
+    d3.csv("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/lgscale_agg_mn.csv").then(function(data) {
+    
+        // format data
+        data.forEach(function(d) {
+            d.year_others = d.year;
+            d.gwh_all = +d.other_gwh;
+        });
+    
+        // Scale the range of the data
+        x.domain(d3.extent(data, function(d) { return parseTime(d.year_others); }));
+        y.domain([0, 40000]);
+    
+        // append attrs to svg
+        svg_gwhothers.append("path").data([data]).attr("class", "line").attr("d", valueline_others).attr("stroke", "purple");
+        svg_gwhothers.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x));
+    
+        // add y axis
+        svg_gwhothers.append("g").call(d3.axisLeft(y));
+    
+        // add y axis descriptions
+        svg_gwhothers.append("text")      // text label for the x axis
+            .attr("x", margin.left - 100 )
+            .attr("y", margin.top - 45 )
+            .style("text-anchor", "middle")
+            .text("GWH");
+    
+        // add circles to data points         
+        g_gwhothers.selectAll("circle").data(data).enter().append("circle")
+        .attr("cx", function(d) { return x(parseTime(d.year_others)) - 10; })
+        .attr("cy", function(d) { return y(d.gwh_all); })
+        .attr("r", function(d, i) { return 7; })
+        .attr("id", function(d) { return d.id; })
+        .style("fill", "#aacc33")
+        .on("mouseover", function(d){
+        // add mouseover data to data points
+            d3.select(this).transition().duration(200).style("fill", "#cc0033");
+    
+            g_gwhothers.selectAll("#tooltip_others").data([d]).enter().append("text")
+            .attr("id", "tooltip_others")
+            .text(function(d, i) { return 'Year:' + d.year_others.substring(0,4) + ', GWH: ' + numberWithCommas(d.gwh_all); })
+    
+            g_gwhothers.selectAll("#tooltip_path_others").data([d]).enter().append("line")
+            .attr("id", "tooltip_path_others")
+            .attr("class", "line")
+            .attr("d", valueline_others)
+            .attr("x1", function(d) {return x(parseTime(d.year_others)) })
+            .attr("x2", function(d) {return x(parseTime(d.year_others)) })
+            .attr("y1", height)
+            .attr("y2", function(d) {return y(d.gwh_all)})
+            .attr("stroke", "steelblue")
+            .style("stroke-dasharray", ("3, 3"));})
+            .on("mouseout", function(d) {
+                d3.select(this).transition().duration(500).style("fill", "#aacc33");
+                g_gwhothers.selectAll("#tooltip_others").remove();
+                g_gwhothers.selectAll("#tooltip_path_others").remove();
+        });
+           
+    });
+    
+    </script>
 
 <div class='section'>References</div>
 <div class="quotations">
     <sup>1</sup>https://www.nyiso.com/documents/20142/2223020/2019-Power-Trends-Report.pdf/0e8d65ee-820c-a718-452c-6c59b2d4818b.  
     The dataset used for "Electric Consumption: 2000 - 2020" was derived from this report.<br><br>
     <sup>2</sup>https://data.ny.gov/Government-Finance/Annual-Population-Estimates-for-New-York-State-and/krt9-ym2k.  2000 - 2020 New York State population data.<br><br>
-    <sup>2</sup>https://data.ny.gov/resource/dprp-55ye.json.  
-    This dataset was used as the source for a Python job I created to summarize and aggregate the data.<br><br>
     <sup>3</sup>https://en.wikipedia.org/wiki/Phase-out_of_incandescent_light_bulbs#United_States.  Incandecent bulb phase-out.<br><br>
-    <sup>4</sup>https://data.ny.gov/Energy-Environment/Solar-Electric-Programs-Reported-by-NYSERDA-Beginn/3x8r-34rs.  
-    The API associated with this reference only provided acces to the first 1,000 records.  As a result, I downloaded
-    the complete CSV file and used it as the source for a Python job I created to summarize and aggregate the data.
-</div>
+    <sup>4</sup>https://data.ny.gov/resource/dprp-55ye.json.  
+    This dataset was used as the source for a Python job I created to summarize and aggregate the data.<br><br>
+  </div>
 </body>
