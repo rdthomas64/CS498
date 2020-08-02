@@ -251,16 +251,27 @@ var parseTime = d3.timeParse("%Y-%m-%d");
 // format ranges
 var x = d3.scaleTime().range([0, width]);
 var y = d3.scaleLinear().range([height, 0]);
-var yr = d3.scaleLinear().range([height, 0]);
 
 // add line
-var valueline_renew = d3.line()
+var hydro_line = d3.line()
     .x(function(d) { return x(parseTime(d.year)); })
-    .y(function(d) { return y(d.gwh); });
+    .y(function(d) { return y(d.gwh_hydro); });
 
-var popline_renew = d3.line()
+var solar_line = d3.line()
     .x(function(d) { return x(parseTime(d.year)); })
-    .y(function(d) { return yr(d.pop); });
+    .y(function(d) { return y(d.gwh_solar); });
+
+var wind_line = d3.line()
+    .x(function(d) { return x(parseTime(d.year)); })
+    .y(function(d) { return y(d.gwh_wind); });
+
+var other_line = d3.line()
+    .x(function(d) { return x(parseTime(d.year)); })
+    .y(function(d) { return yr(d.gwh_other); });
+
+var all_line = d3.line()
+    .x(function(d) { return x(parseTime(d.year)); })
+    .y(function(d) { return yr(d.gwh_all); });
 
 // create graph
 var svg_renew = d3.select("#allrenew").append("svg")
@@ -272,23 +283,29 @@ var svg_renew = d3.select("#allrenew").append("svg")
 var g_renew = svg_renew.append("g").attr("transform", "translate(10, 0)");
         
 // get data
-d3.json("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/gwh_all.json").then(function(data) {
+d3.csv("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/lgscale_agg_all.csv").then(function(data) {
 
     // format data
     data.forEach(function(d) {
         d.date = parseTime(d.year);
-        d.gwh = +d.gwh;
-        d.pop = +d.pop;
+        d.program = d.program;
+        d.gwh_all = +d.gwh_all;
+        d.gwh_solar = +d.gwh_solar;
+        d.gwh_wind = +d.gwh_wind;
+        d.gwh_hydro = +d.gwh_hydro;
+        d.gwh_other = +d.gwh_other;
     });
 
     // Scale the range of the data
     x.domain(d3.extent(data, function(d) { return parseTime(d.year); }));
-    y.domain([150000, 170000]);
-    yr.domain([19000000, 20000000]);
+    y.domain([1000, 30000]);
 
     // append attrs to svg
-    svg_renew.append("path").data([data]).attr("class", "line").attr("d", valueline_renew);
-    svg_renew.append("path").data([data]).attr("class", "line").style("stroke", "red").attr("d", popline_renew);
+    svg_renew.append("path").data([data]).attr("class", "line").attr("d", all_line);
+    svg_renew.append("path").data([data]).attr("class", "line").attr("d", hydro_line);
+    svg_renew.append("path").data([data]).attr("class", "line").attr("d", solar_line);
+    svg_renew.append("path").data([data]).attr("class", "line").attr("d", wind_line);
+    svg_renew.append("path").data([data]).attr("class", "line").attr("d", other_line);
     svg_renew.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x));
 
     // add y axis
@@ -300,19 +317,12 @@ d3.json("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/gwh_all.
         .attr("x", margin.left - 100 )
         .attr("y", margin.top - 45 )
         .style("text-anchor", "middle")
-        .text("GWH");
-
-    svg_renew.append("text")      // text label for the x axis
-        .attr("x", margin.left + 620 )
-        .attr("y", margin.top - 45 )
-        .style("text-anchor", "middle")
-        .text("Population");    
+        .text("GWH");   
 
     // add circles to data points         
     g_renew.selectAll("circle").data(data).enter().append("circle")
     .attr("cx", function(d) { return x(parseTime(d.year)) - 10; })
-    .attr("cy", function(d) { return y(d.gwh); })
-    .attr("cz", function(d) { return yr(d.pop); })
+    .attr("cy", function(d) { return y(d.gwh_all); })
     .attr("r", function(d, i) { return 7; })
     .attr("id", function(d) { return d.id; })
     .style("fill", "#aacc33")
@@ -322,16 +332,16 @@ d3.json("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/gwh_all.
 
         g_renew.selectAll("#tooltip_renew").data([d]).enter().append("text")
         .attr("id", "tooltip_renew")
-        .text(function(d, i) { return 'Year:' + d.year.substring(0,4) + ', GWH: ' + numberWithCommas(d.gwh) + ', Pop: ' + numberWithCommas(d.pop); })
+        .text(function(d, i) { return 'Year:' + d.year.substring(0,4) + ', GWH: ' + numberWithCommas(d.gwh_all); })
 
         g_renew.selectAll("#tooltip_path_renew").data([d]).enter().append("line_renew")
         .attr("id", "tooltip_path_renew")
         .attr("class", "line_renew")
-        .attr("d", valueline)
+        .attr("d", all_line)
         .attr("x1", function(d) {return x(parseTime(d.year)) })
         .attr("x2", function(d) {return x(parseTime(d.year)) })
         .attr("y1", height)
-        .attr("y2", function(d) {return y(d.gwh)})
+        .attr("y2", function(d) {return y(d.gwh_all)})
         .attr("stroke", "steelblue")
         .style("stroke-dasharray", ("3, 3"));})
         .on("mouseout", function(d) {
@@ -349,14 +359,6 @@ d3.json("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/gwh_all.
         .style("stroke-width", 2)
         .style("stroke", "grey")
         .style("fill", "none");
-
-    line_renew.append("text")
-        .attr('class', 'barsEndlineText')
-        .attr('text-anchor', 'middle')
-        .attr("x", 305)
-        .attr("y", 20)
-        .style("font-weight", "bold")
-        .text('EISA enacted');
        
 });
 
