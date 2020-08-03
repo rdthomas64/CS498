@@ -12,7 +12,7 @@
     .content{font-family:Arial, Helvetica, sans-serif; font-size: 16px; margin-bottom: 12px; line-height: 1.7;}
     .notation{font-family:Arial, Helvetica, sans-serif; font-size: 14px; margin-bottom: 20px; font-style: italic;}
     .source{font-family:Arial, Helvetica, sans-serif; font-size: 14px; font-style: italic; margin-bottom: 10px;}
-    label{font-family:Arial, Helvetica, sans-serif; font-size: 16px; }
+    label{font-family:Arial, Helvetica, sans-serif; font-size: 14px; }
     body{margin-left: 20%; margin-right: 20%;}
     .line {fill: none; stroke-width: 2px;}
     svg{font-family:Arial, Helvetica, sans-serif; font-size: 14px; display: block;
@@ -143,7 +143,7 @@ d3.json("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/gwh_all.
         .attr("x2", function(d) {return x(parseTime(d.year)) })
         .attr("y1", height)
         .attr("y2", function(d) {return y(d.gwh)})
-        .attr("stroke", "steelblue")
+        .attr("stroke", "white")
         .style("stroke-dasharray", ("3, 3"));})
         .on("mouseout", function(d) {
             d3.select(this).transition().duration(500).style("fill", "#aacc33");
@@ -252,6 +252,7 @@ function showbm(){
 <div id="others" class="others gwh"  style="color: black;">Other (Biogas, Biomass, Fuel Cell) Renewable Projects<br><br></div>
 
 <script>
+    
 // -----allrevew
 // add line
 var valueline_wind = d3.line()
@@ -312,12 +313,12 @@ d3.csv("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/lgscale_a
         g_gwhall.selectAll("#tooltip_path_renew").data([d]).enter().append("line")
         .attr("id", "tooltip_path_renew")
         .attr("class", "line")
-        .attr("d", valueline_wind)
+        .attr("d", valueline_renew)
         .attr("x1", function(d) {return x(parseTime(d.year_renew)) })
         .attr("x2", function(d) {return x(parseTime(d.year_renew)) })
         .attr("y1", height)
         .attr("y2", function(d) {return y(d.gwh_all)})
-        .attr("stroke", "steelblue")
+        .attr("stroke", "white")
         .style("stroke-dasharray", ("3, 3"));})
         .on("mouseout", function(d) {
             d3.select(this).transition().duration(500).style("fill", "#aacc33");
@@ -330,6 +331,7 @@ d3.csv("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/lgscale_a
 </script>
 
 <script>
+    
     // -----wind
     // add line
     var valueline_wind = d3.line()
@@ -395,7 +397,7 @@ d3.csv("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/lgscale_a
             .attr("x2", function(d) {return x(parseTime(d.year_wind)) })
             .attr("y1", height)
             .attr("y2", function(d) {return y(d.gwh_all)})
-            .attr("stroke", "steelblue")
+            .attr("stroke", "white")
             .style("stroke-dasharray", ("3, 3"));})
             .on("mouseout", function(d) {
                 d3.select(this).transition().duration(500).style("fill", "#aacc33");
@@ -408,6 +410,7 @@ d3.csv("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/lgscale_a
     </script>
 
 <script>
+    
     // -----hydro
     // add line
     var valueline_hydro = d3.line()
@@ -473,7 +476,7 @@ d3.csv("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/lgscale_a
             .attr("x2", function(d) {return x(parseTime(d.year_hydro)) })
             .attr("y1", height)
             .attr("y2", function(d) {return y(d.gwh_all)})
-            .attr("stroke", "steelblue")
+            .attr("stroke", "white")
             .style("stroke-dasharray", ("3, 3"));})
             .on("mouseout", function(d) {
                 d3.select(this).transition().duration(500).style("fill", "#aacc33");
@@ -486,6 +489,7 @@ d3.csv("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/lgscale_a
     </script>
 
 <script>
+    
     // -----others
     // add line
     var valueline_others = d3.line()
@@ -551,7 +555,7 @@ d3.csv("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/lgscale_a
             .attr("x2", function(d) {return x(parseTime(d.year_others)) })
             .attr("y1", height)
             .attr("y2", function(d) {return y(d.gwh_all)})
-            .attr("stroke", "steelblue")
+            .attr("stroke", "white")
             .style("stroke-dasharray", ("3, 3"));})
             .on("mouseout", function(d) {
                 d3.select(this).transition().duration(500).style("fill", "#aacc33");
@@ -562,127 +566,138 @@ d3.csv("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/lgscale_a
     });
     
     </script>
-
+<div class='content'>The impact of renewable energy on total GWH production has gone from 2.9% in 2006, to 23.23% in 2020 (see the tooltips in the following graph).  
+    This means the State of New York has made progress of 46.5% towards its 2030 goal of having 50% of renewable energy in production.<br><br>  </div>
 <div class='section' style="margin-top: -10px;">Impact of Renewables on Electric Production:  2006 - 2020</div>
 <div class="notation">Mouseover enabled on datapoints; 2020 GWH projected.<br>
 Data source:  NYISO<sup>1</sup>, New York Open Data<sup>2, 4</sup></div>    
 <div id='final'></div>
-
 <script>
+    
+// add line
+var valueline_final = d3.line()
+    .x(function(d) { return x(d.year_final); })
+    .y(function(d) { return y(d.gwh_final); });
 
-    // add line
-    var valueline_final = d3.line()
-        .x(function(d) { return x(parseTime(d.year_final)); })
-        .y(function(d) { return y(d.gwh_final); });
-    
-    var popline_final = d3.line()
-        .x(function(d) { return x(parseTime(d.year_final)); })
-        .y(function(d) { return yr(d.pop_final); });
-    
-    var renewline_final = d3.line()
-        .x(function(d) { return x(parseTime(d.year_final)); })
-        .y(function(d) { return yr(d.renew_final); });
+var popline_final = d3.line()
+    .x(function(d) { return x(d.year_final); })
+    .y(function(d) { return yr(d.pop_final); });
 
-    // create graph
-    var svg_final = d3.select("#final").append("svg")
-        .attr("width", width + margin.left + margin.right)
-        .attr("height", height + margin.top + margin.bottom)
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
-    
-    var g_final = svg_final.append("g").attr("transform", "translate(10, 0)");
-            
-    // get data
-    d3.json("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/gwh_all.json").then(function(data) {
-    
-        // format data
-        data.forEach(function(d) {
-            d.year_final = parseTime(d.year);
-            d.gwh_final = +d.gwh;
-            d.pop_final = +d.pop;
-            d.renew_final = +d.renew;
-        });
-    
-        // Scale the range of the data
-        x.domain(d3.extent(data, function(d) { return parseTime(d.year_final); }));
-        y.domain([0, 200000]);
-        yr.domain([19000000, 20000000]);
-    
-        // append attrs to svg
-        svg_final.append("path").data([data]).attr("class", "line").attr("stroke", "steelblue").attr("d", valueline_final);
-        svg_final.append("path").data([data]).attr("class", "line").attr("stroke", "purple").attr("d", renewline_final);
-        svg_final.append("path").data([data]).attr("class", "line").style("stroke", "red").attr("d", popline_final);
-        svg_final.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x));
-    
-        // add y axis
-        svg_final.append("g").call(d3.axisLeft(y));
-        svg_final.append("g").attr("transform", "translate( " + width + ", 0 )").call(d3.axisRight(yr));
-    
-        // add y axis descriptions
-        svg_final.append("text")      // text label for the x axis
-            .attr("x", margin.left - 100 )
-            .attr("y", margin.top - 45 )
-            .style("text-anchor", "middle")
-            .text("GWH");
-    
-        svg_final.append("text")      // text label for the x axis
-            .attr("x", margin.left + 620 )
-            .attr("y", margin.top - 45 )
-            .style("text-anchor", "middle")
-            .text("Population");
-    
-        // add circles to data points         
-        g_final.selectAll("circle").data(data).enter().append("circle")
-        .attr("cx", function(d) { return x(parseTime(d.year_final)) - 10; })
-        .attr("cy", function(d) { return y(d.gwh_final); })
-        .attr("cz", function(d) { return yr(d.pop_final); })
-        .attr("r", function(d, i) { return 7; })
-        .attr("id", function(d) { return d.id; })
-        .style("fill", "#aacc33")
-        .on("mouseover", function(d){
-        // add mouseover data to data points
-            d3.select(this).transition().duration(200).style("fill", "#cc0033");
-    
-            g_final.selectAll("#tooltip_final").data([d]).enter().append("text")
-            .attr("id", "tooltip_final")
-            .text(function(d, i) { return 'Year:' + d.year_final.substring(0,4) + ', GWH: ' + numberWithCommas(d.gwh_final) + ', Pop: ' + numberWithCommas(d.pop_final); })
-    
-            g_final.selectAll("#tooltip_path_final").data([d]).enter().append("line")
-            .attr("id", "tooltip_path_final")
-            .attr("class", "line")
-            .attr("d", valueline_final)
-            .attr("x1", function(d) {return x(parseTime(d.year_final)) })
-            .attr("x2", function(d) {return x(parseTime(d.year_final)) })
-            .attr("y1", height)
-            .attr("y2", function(d) {return y(d.gwh_final)})
-            .attr("stroke", "steelblue")
-            .style("stroke-dasharray", ("3, 3"));})
-            .on("mouseout", function(d) {
-                d3.select(this).transition().duration(500).style("fill", "#aacc33");
-                g_final.selectAll("#tooltip_final").remove();
-                g_final.selectAll("#tooltip_path_final").remove();
-        });
-        var line_final = svg_final.append('g');
-    
-        line_final.append("line")
-            .attr("x1", x(parseTime('2008-01-01')))  
-            .attr("y1", 10)
-            .attr("x2", x(parseTime('2008-01-01')))  
-            .attr("y2", height)
-            .style("stroke-width", 2)
-            .style("stroke", "grey")
-            .style("fill", "none");
-    
-        line_final.append("text")
-            .attr('class', 'barsEndlineText')
-            .attr('text-anchor', 'middle')
-            .attr("x", 305)
-            .attr("y", 20)
-            .style("font-weight", "bold")
-            .text('EISA enacted');
-           
+var renewline_final = d3.line()
+    .x(function(d) { return x(d.year_final); })
+    .y(function(d) { return yr(d.renew_final); });    
+
+// create graph
+var svg_final = d3.select("#final").append("svg")
+    .attr("width", width + margin.left + margin.right)
+    .attr("height", height + margin.top + margin.bottom)
+    .append("g")
+    .attr("transform", "translate(" + margin.left + "," + margin.top + ")")
+
+var g_final = svg_final.append("g").attr("transform", "translate(10, 0)");
+        
+// get data
+d3.json("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/gwh_all.json").then(function(data) {
+
+    // format data
+    data.forEach(function(d) {
+        d.year_final = parseTime(d.year);
+        d.gwh_final = +d.gwh;
+        d.pop_final = +d.pop;
+        d.renew_final = +d.renew;
+
     });
-    </script>
+
+    // Scale the range of the data
+    x.domain(d3.extent(data, function(d) { return d.year_final; }));
+    y.domain([0, 200000]);
+    yr.domain([19000000, 20000000]);
+
+    // append attrs to svg
+    svg_final.append("path").data([data]).attr("class", "line").attr("d", valueline_final).attr("stroke", "steelblue");
+    svg_final.append("path").data([data]).attr("class", "line").attr("d", renewline_final).attr("stroke", "purple");
+    svg_final.append("path").data([data]).attr("class", "line").style("stroke", "red").attr("d", popline_final);
+    svg_final.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x));
+
+    // add y axis
+    svg_final.append("g").call(d3.axisLeft(y));
+    svg_final.append("g").attr("transform", "translate( " + width + ", 0 )").call(d3.axisRight(yr));
+
+    // add y axis descriptions
+    svg_final.append("text")      // text label for the x axis
+        .attr("x", margin.left - 100 )
+        .attr("y", margin.top - 45 )
+        .style("text-anchor", "middle")
+        .text("GWH");
+
+    svg_final.append("text")      // text label for the x axis
+        .attr("x", margin.left + 620 )
+        .attr("y", margin.top - 45 )
+        .style("text-anchor", "middle")
+        .text("Population");
+
+    // add circles to data points         
+    g_final.selectAll("circle").data(data).enter().append("circle")
+    .attr("cx", function(d) { return x(d.year_final) - 10; })
+    .attr("cy", function(d) { return y(d.gwh_final); })
+    .attr("cz", function(d) { return yr(d.pop_final); })
+    .attr("r", function(d, i) { return 7; })
+    .attr("id", function(d) { return d.id; })
+    .style("fill", "#aacc33")
+    
+    .on("mouseover", function(d){
+    // add mouseover data to data points
+        d3.select(this).transition().duration(200).style("fill", "#cc0033");
+
+        g_final.selectAll("#tooltip_final").data([d]).enter().append("text")
+        .attr("id", "tooltip_final")
+        .text(function(d, i) { return 'Year:' + d.year_final.getFullYear() + ', GWH Utilization:' + numberWithCommas(d.gwh_final) 
+        + ', GWH Renew:' + numberWithCommas(Math.round(d.renew_final)) + ' Renew/Util:' + numberWithCommas( ((parseFloat(d.renew_final) / parseFloat(d.gwh_final)) * 100).toFixed(2)) + '%, Pop:' + numberWithCommas(d.pop_final); })
+
+        g_final.selectAll("#tooltip_path").data([d]).enter().append("line")
+        .attr("id", "tooltip_path")
+        .attr("class", "line")
+        .attr("d", valueline)
+        .attr("x1", function(d) {return x(d.year_final) })
+        .attr("x2", function(d) {return x(d.year_final) })
+        .attr("y1", height)
+        .attr("y2", function(d) {return y(d.gwh_final)})
+        .attr("stroke", "white")
+        .style("stroke-dasharray", ("3, 3"));})
+        .on("mouseout", function(d) {
+            d3.select(this).transition().duration(500).style("fill", "#aacc33");
+            g_final.selectAll("#tooltip_final").remove();
+            g_final.selectAll("#tooltip_path_final").remove();
+    });
+      
+    var line_final = svg_final.append('g');
+
+    line_final.append("line")
+        .attr("x1", x(parseTime('2008-01-01')))  
+        .attr("y1", 10)
+        .attr("x2", x(parseTime('2008-01-01')))  
+        .attr("y2", height)
+        .style("stroke-width", 2)
+        .style("stroke", "grey")
+        .style("fill", "none");
+
+    line_final.append("text")
+        .attr('class', 'barsEndlineText')
+        .attr('text-anchor', 'middle')
+        .attr("x", 305)
+        .attr("y", 20)
+        .style("font-weight", "bold")
+        .text('EISA enacted');
+
+  
+       
+});
+
+
+</script>
+
+
+
 <div class='section'>References</div>
 <div class="quotations">
     <sup>1</sup>https://www.nyiso.com/documents/20142/2223020/2019-Power-Trends-Report.pdf/0e8d65ee-820c-a718-452c-6c59b2d4818b.  
@@ -693,3 +708,4 @@ Data source:  NYISO<sup>1</sup>, New York Open Data<sup>2, 4</sup></div>
     This dataset was used as the source for a Python job I created to summarize and aggregate the data.<br><br>
   </div>
 </body>
+</html>html>
