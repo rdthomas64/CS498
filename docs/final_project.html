@@ -18,7 +18,7 @@
     svg{font-family:Arial, Helvetica, sans-serif; font-size: 14px; display: block;
     margin: auto;}
     g{font-size:12px;}
-    #tooltip, #tooltip_renew, #tooltip_wind, #tooltip_hydro, #tooltip_others {font-family: Arial, Helvetica, sans-serif; font-size: 15px; font-weight: bold;}
+    #tooltip, #tooltip_renew, #tooltip_wind, #tooltip_hydro, #tooltip_others, #tooltip_final {font-family: Arial, Helvetica, sans-serif; font-size: 15px; font-weight: bold;}
     #gwh{color: black;}
     #gwh_all{text-align:center;}
     #others{display: none;}
@@ -572,16 +572,16 @@ Data source:  NYISO<sup>1</sup>, New York Open Data<sup>2, 4</sup></div>
 
     // add line
     var valueline_final = d3.line()
-        .x(function(d) { return x(parseTime(d.year)); })
-        .y(function(d) { return y(d.gwh); });
+        .x(function(d) { return x(parseTime(d.year_final)); })
+        .y(function(d) { return y(d.gwh_final); });
     
     var popline_final = d3.line()
-        .x(function(d) { return x(parseTime(d.year)); })
-        .y(function(d) { return yr(d.pop); });
+        .x(function(d) { return x(parseTime(d.year_final)); })
+        .y(function(d) { return yr(d.pop_final); });
     
     var renewline_final = d3.line()
-        .x(function(d) { return x(parseTime(d.year)); })
-        .y(function(d) { return yr(d.renew); });
+        .x(function(d) { return x(parseTime(d.year_final)); })
+        .y(function(d) { return yr(d.renew_final); });
 
     // create graph
     var svg_final = d3.select("#final").append("svg")
@@ -597,20 +597,20 @@ Data source:  NYISO<sup>1</sup>, New York Open Data<sup>2, 4</sup></div>
     
         // format data
         data.forEach(function(d) {
-            d.date = parseTime(d.year);
-            d.gwh = +d.gwh;
-            d.pop = +d.pop;
-            d.renew = +d.renew;
+            d.year_final = parseTime(d.year);
+            d.gwh_final = +d.gwh;
+            d.pop_final = +d.pop;
+            d.renew_final = +d.renew;
         });
     
         // Scale the range of the data
-        x.domain(d3.extent(data, function(d) { return parseTime(d.year); }));
+        x.domain(d3.extent(data, function(d) { return parseTime(d.year_final); }));
         y.domain([0, 200000]);
         yr.domain([19000000, 20000000]);
     
         // append attrs to svg
-        svg_final.append("path").data([data]).attr("class", "line").attr("d", valueline_final).attr("stroke", "steelblue");
-        svg_final.append("path").data([data]).attr("class", "line").attr("d", renewline_final).attr("stroke", "purple");
+        svg_final.append("path").data([data]).attr("class", "line").attr("stroke", "steelblue").attr("d", valueline_final);
+        svg_final.append("path").data([data]).attr("class", "line").attr("stroke", "purple").attr("d", renewline_final);
         svg_final.append("path").data([data]).attr("class", "line").style("stroke", "red").attr("d", popline_final);
         svg_final.append("g").attr("transform", "translate(0," + height + ")").call(d3.axisBottom(x));
     
@@ -633,9 +633,9 @@ Data source:  NYISO<sup>1</sup>, New York Open Data<sup>2, 4</sup></div>
     
         // add circles to data points         
         g_final.selectAll("circle").data(data).enter().append("circle")
-        .attr("cx", function(d) { return x(parseTime(d.year)) - 10; })
-        .attr("cy", function(d) { return y(d.gwh); })
-        .attr("cz", function(d) { return yr(d.pop); })
+        .attr("cx", function(d) { return x(parseTime(d.year_final)) - 10; })
+        .attr("cy", function(d) { return y(d.gwh_final); })
+        .attr("cz", function(d) { return yr(d.pop_final); })
         .attr("r", function(d, i) { return 7; })
         .attr("id", function(d) { return d.id; })
         .style("fill", "#aacc33")
@@ -643,24 +643,24 @@ Data source:  NYISO<sup>1</sup>, New York Open Data<sup>2, 4</sup></div>
         // add mouseover data to data points
             d3.select(this).transition().duration(200).style("fill", "#cc0033");
     
-            g_final.selectAll("#tooltip").data([d]).enter().append("text")
-            .attr("id", "tooltip")
-            .text(function(d, i) { return 'Year:' + d.year.substring(0,4) + ', GWH: ' + numberWithCommas(d.gwh) + ', Pop: ' + numberWithCommas(d.pop); })
+            g_final.selectAll("#tooltip_final").data([d]).enter().append("text")
+            .attr("id", "tooltip_final")
+            .text(function(d, i) { return 'Year:' + d.year_final.substring(0,4) + ', GWH: ' + numberWithCommas(d.gwh_final) + ', Pop: ' + numberWithCommas(d.pop_final); })
     
-            g_final.selectAll("#tooltip_path").data([d]).enter().append("line")
-            .attr("id", "tooltip_path")
+            g_final.selectAll("#tooltip_path_final").data([d]).enter().append("line")
+            .attr("id", "tooltip_path_final")
             .attr("class", "line")
-            .attr("d", valueline)
-            .attr("x1", function(d) {return x(parseTime(d.year)) })
-            .attr("x2", function(d) {return x(parseTime(d.year)) })
+            .attr("d", valueline_final)
+            .attr("x1", function(d) {return x(parseTime(d.year_final)) })
+            .attr("x2", function(d) {return x(parseTime(d.year_final)) })
             .attr("y1", height)
-            .attr("y2", function(d) {return y(d.gwh)})
+            .attr("y2", function(d) {return y(d.gwh_final)})
             .attr("stroke", "steelblue")
             .style("stroke-dasharray", ("3, 3"));})
             .on("mouseout", function(d) {
                 d3.select(this).transition().duration(500).style("fill", "#aacc33");
-                g_final.selectAll("#tooltip").remove();
-                g_final.selectAll("#tooltip_path").remove();
+                g_final.selectAll("#tooltip_final").remove();
+                g_final.selectAll("#tooltip_path_final").remove();
         });
         var line_final = svg_final.append('g');
     
