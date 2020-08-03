@@ -10,7 +10,7 @@
     .section, .gwh{font-family:Arial, Helvetica, sans-serif; font-size: 24px; margin-top: 26px; color: forestgreen; margin-bottom: 12px;}
     .gwh{font-size: 18px;}
     .content{font-family:Arial, Helvetica, sans-serif; font-size: 16px; margin-bottom: 12px; line-height: 1.7;}
-    .notation{font-family:Arial, Helvetica, sans-serif; font-size: 14px; margin-bottom: 20px; font-style: italic;}
+    .notation{font-family:Arial, Helvetica, sans-serif; font-size: 14px; margin-bottom: 20px; font-style: italic; line-height: 1.5;}
     .source{font-family:Arial, Helvetica, sans-serif; font-size: 14px; font-style: italic; margin-bottom: 10px;}
     label{font-family:Arial, Helvetica, sans-serif; font-size: 14px; }
     body{margin-left: 20%; margin-right: 20%;}
@@ -570,7 +570,8 @@ d3.csv("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/lgscale_a
     This means the State of New York has made progress of 46.5% towards its 2030 goal of having 50% of renewable energy in production.<br><br>  </div>
 <div class='section' style="margin-top: -10px;">Impact of Renewables on Electric Production:  2006 - 2020</div>
 <div class="notation">Mouseover enabled on datapoints; 2020 GWH projected.<br>
-Data source:  NYISO<sup>1</sup>, New York Open Data<sup>2, 4</sup></div>    
+Data source:  NYISO<sup>1</sup>, New York Open Data<sup>2, 4</sup><br>
+GWH Consumption (blue), GWH Renewable (purple), Population (red)</div>    
 <div id='final'></div>
 <script>
     
@@ -585,7 +586,7 @@ var popline_final = d3.line()
 
 var renewline_final = d3.line()
     .x(function(d) { return x(d.year_final); })
-    .y(function(d) { return yr(d.renew_final); });    
+    .y(function(d) { return y(d.renew_final); });    
 
 // create graph
 var svg_final = d3.select("#final").append("svg")
