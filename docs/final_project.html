@@ -43,7 +43,8 @@
         incandesent to halogen or LED) that possibly impacted electricity consumption.</div>
     <div class='section'>Electricity Consumption (Gigawatt Hours) vs. Population:  2000 - 2020</div>
         <div class="notation">Mouseover enabled on datapoints; 2020 GWH projected; population data 2000 - 2019.<br>
-        Data source:  NYISO<sup>1</sup>, New York Open Data<sup>2</sup></div>
+        Data source:  NYISO<sup>1</sup>, New York Open Data<sup>2</sup><br>
+        GWH Consumption (blue), Population (red)</div>
         <div id="gwh_all"></div>
 <script>
 // format numbers
@@ -197,7 +198,8 @@ d3.json("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/gwh_all.
 
 <div class='section'>Electric Production (Gigawatt Hours) from Renewables:  2006 - 2020</div>
 <div class="notation">Mouseover enabled on datapoints; toggle provides data specific to reach renewable type; 2020 GWH projected.<br>
-Data source:  New York Open Data<sup>4</sup></div>
+Data source:  New York Open Data<sup>4</sup><br>
+GWH Renewable (purple)</div>
 
 <div>
     <label><input type="radio" name="lgRadio" class='lgRadio' value="all" onclick="showall();" checked > All</label>
@@ -569,7 +571,7 @@ d3.csv("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/lgscale_a
 <div class='content'>The impact of renewable energy on total GWH production has gone from 2.9% in 2006, to 23.23% in 2020 (see the tooltips in the following graph).  
     This means the State of New York has made progress of 46.5% towards its 2030 goal of having 50% of renewable energy in production.<br><br>  </div>
 <div class='section' style="margin-top: -10px;">Impact of Renewables on Electric Production:  2006 - 2020</div>
-<div class="notation">Mouseover enabled on datapoints; 2020 GWH projected.<br>
+<div class="notation">Mouseover enabled on datapoints; GWH Renewable/GWH Consumption available in tooltip; 2020 GWH projected.<br>
 Data source:  NYISO<sup>1</sup>, New York Open Data<sup>2, 4</sup><br>
 GWH Consumption (blue), GWH Renewable (purple), Population (red)</div>    
 <div id='final'></div>
@@ -653,7 +655,7 @@ d3.json("https://raw.githubusercontent.com/rdthomas64/CS498/master/docs/gwh_all.
         g_final.selectAll("#tooltip_final").data([d]).enter().append("text")
         .attr("id", "tooltip_final")
         .text(function(d, i) { return 'Year:' + d.year_final.getFullYear() + ', GWH Utilization:' + numberWithCommas(d.gwh_final) 
-        + ', GWH Renew:' + numberWithCommas(Math.round(d.renew_final)) + ' Renew/Util:' + numberWithCommas( ((parseFloat(d.renew_final) / parseFloat(d.gwh_final)) * 100).toFixed(2)) + '%, Pop:' + numberWithCommas(d.pop_final); })
+        + ', GWH Renew:' + numberWithCommas(Math.round(d.renew_final)) + ', Renew/Consumption:' + numberWithCommas( ((parseFloat(d.renew_final) / parseFloat(d.gwh_final)) * 100).toFixed(2)) + '%' ; })
 
         g_final.selectAll("#tooltip_path").data([d]).enter().append("line")
         .attr("id", "tooltip_path")
